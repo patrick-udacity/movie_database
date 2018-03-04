@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOnHeader.html" %}
+
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+			<h1>Deleting the movie: {{movie.movie_name }}
+				<figure class="creator">
+					<img src="{{creator.picture}}">
+					<figcaption>movie submitted by {{creator.user_name}}</figcaption>
+				</figure>
+			</h1>
+		</div>
+	</div>
+<h2> Are you sure you want to delete the movie "{{movie.movie_name}}"? </h2>
+
+<form action="{{url_for('movieDelete', movie_id = movie.movie_id)}}" method = "post">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <img src="{{movie.image}}" style="height:200px;">
+        </div>
+        <div class="col-md-6">
+            <button type="submit" 
+                class="btn btn-default movie-button" 
+                id="delete-movie-submit" 
+                name="delete-movie-submit" 
+                value="delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete It</button>
+            
+            <button type="submit" 
+                    class="btn btn-default movie-button" 
+                    id="delete-movie-cancel" 
+                    name="delete-movie-cancel" 
+                    value="cancel"
+            >
+                <span class="glyphicon glyphicon-ok" 
+                    aria-hidden="true">
+                </span>
+                Cancel
+            </button>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <h2> This action cannot be undone!</h2>
+    </div>
+</form>
+
+
+{% endblock %}

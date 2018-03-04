@@ -1,0 +1,133 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOnHeader.html" %}
+
+
+<div class="row divider gold">
+	<div class="col-md-12"></div>
+</div>
+<div class="row banner menu">
+	<div class="col-md-11 col-md-offset-1 padding-none">
+		<h1>Rating: {{ movie.movie_name }}
+		<figure class="creator">
+			<img src="{{creator.picture}}">
+			<figcaption>movie submitted by {{creator.user_name}}</figcaption>
+		</figure>
+		</h1>
+	</div>
+</div>
+
+	<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul>
+					{% for message in messages %}
+						<li> <strong> {{ message }} </strong> </li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+	</div>
+
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			
+		</div>
+		<div class="col-md-7"></div>
+	</div>	
+	<form action="{{ url_for('movieEditRating',movie_id = movie.movie_id)}}" method = "post">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-6">
+						<h2>Movie Genre: {{movie.movie_genre.upper()}}</h2>
+
+					</div>
+					<div class="col-md-4">
+						<h2>Released Date: {{movie.year_released}}</h2>
+
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+				
+				
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-5">
+						<h2>Summary:</h2>
+						<p class="summaryText">{{movie.description}}</p>
+						
+						<label class="control-label" for="rateIt">
+								Your Rating:
+							</label>
+							<input id="updateRateIt" name="updateRateIt" class="rating rating-loading" 
+									data-min="0" data-max="5" data-step="1" value="{{userRating.rating}}"
+							>
+							<H2 class="control-label" for="rateIt">
+									Average Rating:
+							</H2>
+							<input id="rateIt" name="rateIt" 
+								class="rating rating-loading" 
+								value="{{movie.avg_rating}}"
+								data-min="0" 
+								data-max="5" 
+								data-step=".5" 
+								data-readonly="true"
+								displayOnly="true"						
+							>
+					<div>
+					
+				</div>
+					
+				</div>
+				<div class="col-md-1"></div>
+
+				<div class="col-md-3">
+					<a href = "{{movie.trailer_link}}" data-toggle="tooltip" title="Click to view this movie." rel="noopener noreferrer" target="_blank">
+						<img src="{{movie.image}}"  style="height:300px;">
+					</a>
+				</div>
+				<div class="col-md-2">
+					{% for dict_item in range(1,6) %}
+						<H4>{{dict_item}} star ratings: {{allRatings.get(dict_item| string,"")}}</H4>
+					{% endfor %}
+				</div>
+
+					
+			
+
+			</div>
+				
+				<div class="row">
+					<div class="col-md-6 col-md-offset-1 padding-top">
+					
+						
+						<button type="submit" 
+                            class="btn btn-default" 
+                            id="rate-movie-submit" 
+                            name="rate-movie-submit" 
+                            value="update"
+                        >
+							<span class="glyphicon glyphicon-ok" 
+                                aria-hidden="true">
+                            </span>
+                            Submit Rating
+						</button>
+                        <button type="submit" 
+                            class="btn btn-default movie-button" 
+                            id="rate-movie-cancel" 
+                            name="rate-movie-cancel" 
+                            value="cancel"
+                        >
+                            <span class="glyphicon glyphicon-ok" 
+                                aria-hidden="true">
+                            </span>
+                            Cancel
+                        </button>
+
+					</div>
+				</div>
+			</div>				
+		</form>
+{% endblock %}

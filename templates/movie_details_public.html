@@ -1,0 +1,84 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOnHeader.html" %}
+
+
+<div class="row divider gold">
+	<div class="col-md-12"></div>
+</div>
+<div class="row banner menu">
+	<div class="col-md-11 col-md-offset-1 padding-none">
+		<h1>{{ movie.movie_name }}
+		<figure class="creator">
+			<img src="{{creator.picture}}">
+			<figcaption>movie submitted by {{creator.user_name}}</figcaption>
+		</figure>
+		</h1>
+	</div>
+</div>
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+	{% if items !=[] %}	
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-4">
+				<h2>Movie Genre: {{movie.movie_genre.upper()}}</h2>
+
+			</div>
+			<div class="col-md-4">
+				<h2>Released Date: {{movie.year_released}}</h2>
+
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-5">
+				<h2>Summary:</h2>
+				{{movie.description}}<br><br>
+				<a href="{{url_for('movieEditRating', movie_id = movie.movie_id )}}">
+					<button class="btn btn-default movie-button" id="new-menu-item">
+						<span class="glyphicon glyphicon-star" aria-hidden="true"></span>Rate the Movie
+					</button>
+				</a>
+				<a href = "{{url_for('showGenreMembers', movie_genre = movie.movie_genre)}}">
+					<button class="btn btn-default movie-button" id="new-menu-item">
+						<span class="glyphicon glyphicon-film" 
+						aria-hidden="true"></span>
+						Back to {{movie.movie_genre.upper()}}
+					</button>
+				</a>
+			</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-3">
+				<a href = "{{movie.trailer_link}}" data-toggle="tooltip" title="Click to view this movie." rel="noopener noreferrer" target="_blank">
+						<img src="{{movie.image}}"  style="height:200px;">
+				</a>
+					<input id="rateIt" name="rateIt" 
+						class="rating rating-loading" 
+						value="{{movie.avg_rating}}"
+						data-min="0" 
+						data-max="5" 
+						data-step=".5" 
+						data-readonly="true"
+						displayOnly="true"						
+					>
+			</div>			
+			<div class="col-md-1"></div>
+		</div>		
+	{% endif %}
+
+{% endblock %}

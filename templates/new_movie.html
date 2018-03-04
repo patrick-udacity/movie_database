@@ -1,0 +1,109 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOnHeader.html" %}
+
+	<div class="row divider green">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner menu">
+		<div class="col-md-11 col-md-offset-1 padding-none">
+			<h1>Add a new '{{movie_genre.upper()}}' movie:
+				<figure class="creator">
+					<img src="{{creator.picture}}">
+					<figcaption>movie submitted by {{creator}}</figcaption>
+				</figure>
+			</h1>
+		</div>
+	</div>
+
+	<form action="{{ url_for('movieCreate',movie_genre = movie_genre)}}" method = "post">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-1 padding-top">
+				
+					<label for="name">Movie Name:</label>
+					<input type ="text" maxlength="100" class="form-control" name="movie_name" value=""><br>
+
+					<label for="description">Description:</label>
+					<textarea class="form-control" maxlength="250" rows="1" name="description"></textarea><br>
+
+					<label for="year_released">Year Released:</label>
+					<div class="input-group">
+						<div class="input-group-addon">(mm/dd/yyyy)</div>
+						<input type ="text" maxlength="10" class="form-control" name="year_released" value="">
+					</div>
+					
+					<div>
+						<br><label for="image">Image URL:</label>
+						<textarea class="form-control" maxlength="250" rows="2" name="image"></textarea>
+						<label for="image">Trailer Link:</label>
+						<textarea class="form-control" maxlength="1000" rows="2" name="trailer_link"></textarea>							
+					</div>
+				</div>
+				<div class="col-md-6 col-md-offset-1">						
+					<label class="radio" for="genre">Genre:</label>
+					<div class="radio">
+							<label>
+								<input type="radio" name="genre" id="genre1" value="children" {% if movie_genre == 'children'%}checked{%endif%}>Children
+							</label>
+							<label>
+								<input type="radio" name="genre" id="genre2" value="comedy" {% if movie_genre == 'comedy'%}checked{%endif%}>Comedy
+						  </label>
+							<label>
+								<input type="radio" name="genre" id="genre3" value="drama" {% if movie_genre == 'drama'%}checked{%endif%}>Drama
+							</label>
+							<label>
+								<input type="radio" name="genre" id="genre4" value="fantasy" {% if movie_genre == 'fantasy'%}checked{%endif%}>Fantasy
+						  </label>
+						  <label>
+								<input type="radio" name="genre" id="genre5" value="history" {% if movie_genre == 'history'%}checked{%endif%}>History
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="genre" id="genre6" value="horror" {% if movie_genre == 'horror'%}checked{%endif%}>Horror
+							</label>
+							<label>
+								<input type="radio" name="genre" id="genre7" value="religion" {% if movie_genre == 'religion'%}checked{%endif%}>Religion
+						  </label>
+							<label>
+								<input type="radio" name="genre" id="genre8" value="romance" {% if movie_genre == 'romance'%}checked{%endif%}>Romance
+							</label>
+							<label>
+								<input type="radio" name="genre" id="genre9" value="sci fi" {% if movie_genre == 'sci fi'%}checked{%endif%}>Science-Fiction
+						  </label>								  
+						</div>
+
+					
+
+						<label class="control-label col-sm-2" for="rateIt">
+										Rate This Movie:
+									</label>
+									<div class="col-sm-10">
+										<input id="rateIt" name="rateIt" class="rating rating-loading" 
+											data-min="0" data-max="5" data-step="1" value=""
+										>
+									</div>
+											
+					
+					
+
+					<button type="submit" 
+						class="btn btn-default movie-button" 
+						id="new-movie-submit" 
+						name="new-movie-submit" 
+						value="update">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Create</button>
+					
+					<button type="submit" 
+							class="btn btn-default movie-button" 
+							id="new-movie-cancel" 
+							name="new-movie-cancel" 
+							value="cancel">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Back to {{movie_genre.upper()}}</button>
+					</div>
+				</div>
+			</div>
+		</div>				
+	</form>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOffHeader.html" %}
+
+	<div class="row divider gold">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner main">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h1>ScriptLad Movie Reviews</h1>
+		</div>
+	</div>
+
+	<div class = 'flash'>
+				  {% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			  
+			<ul>
+			{% for message in messages %}
+				<li> <strong> {{ message }} </strong> </li>
+			{% endfor %}
+			</ul>
+			{% endif %}
+		{% endwith %}
+
+	</div>
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h2>Movies in the genre "{{genre.movie_genre.upper()}}"</h2>
+		</div>
+		<div class="col-md-7"></div>
+	</div>
+	
+	{% if movies !=[] %}	
+		{% for i in movies %}	
+			<div class="row">
+				<div class="col-md-6">
+					<div class="menu-item"
+						data-toggle="tooltip" 
+						title="Logon to Rate or Edit this movie."
+						data-placement="right" 
+					>
+						<h3>{{i.movie_name}}</h3>
+						<p>{{i.description}}</p>
+						<p><em>Release Date: </em>{{i.year_released}}</p>
+						<p class="menu-price"><em>Movie Trailer: </em>
+							<a href="{{i.trailer_link}}" 
+								target="_blank">Click to watch...
+							</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3>Submitted by: {{i.entry_owner}}</h3>
+					<img src="{{i.image}}"  style="height:200px;">
+					<input id="rateIt" name="rateIt" 
+						class="rating rating-loading" 
+						value="{{i.avg_rating}}"
+						data-min="0" 
+						data-max="5" 
+						data-step=".5" 
+						data-readonly="true"
+						displayOnly="true"
+					>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<h2>No movies are currently listed for genre "{{genre.movie_genre}}"</h2>
+	{% endif %}
+{% endblock %}

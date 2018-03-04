@@ -1,0 +1,78 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "loggedOnHeader.html" %}
+
+	<div class="row divider gold">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner main">
+		<div class="col-md-1"></div>
+		<div class="col-md-11 padding-none">
+			<h1>ScriptLad Movie Reviews</h1>
+		</div>
+	</div>
+
+	<div class = 'flash'>
+				  {% with messages = get_flashed_messages() %}
+		  {% if messages %}
+			  
+			<ul>
+			{% for message in messages %}
+				<li> <strong> {{ message }} </strong> </li>
+			{% endfor %}
+			</ul>
+			{% endif %}
+		{% endwith %}
+
+	</div>
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-6"><h2>Movies in the genre "{{genre.movie_genre.upper()}}"</h2></div>
+		<div class="col-md-6 padding-none text-right">
+			<a href="{{url_for('movieCreate', movie_genre = genre.movie_genre)}}">
+				<button class="btn btn-default movie_button" id="new-restaurant">
+					<span class="glyphicon glyphicon-film" aria-hidden="true"></span>Add Movie
+				</button>
+			</a>
+		</div>
+		<div class="col-md-7"></div>
+	</div>
+	
+	{% if movies !=[] %}	
+		{% for i in movies %}	
+			<div class="row">
+				<div class="col-md-6">
+					<div class="menu-item">
+						<a href = "{{url_for('showMovieDetails', movie_id = i.movie_id)}}">
+							<h2>{{i.movie_name}}</h2>
+						</a>
+						<p>{{i.description}}</p>
+						<p><em>Release Date: </em>{{i.year_released}}</p>
+						<p class="menu-price"><em>Movie Trailer: </em>
+							<a href="{{i.trailer_link}}" 
+								target="_blank">Click to watch...
+							</a>
+						</p>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h3>Submitted by: {{i.entry_owner}}</h3>
+					<a href = "{{url_for('showMovieDetails', movie_id = i.movie_id)}}">
+						<img src="{{i.image}}"  style="height:200px;">
+					</a>
+					<input id="rateIt" name="rateIt" 
+						class="rating rating-loading" 
+						value="{{i.avg_rating}}"
+						data-min="0" 
+						data-max="5" 
+						data-step=".5" 
+						data-readonly="true"
+						displayOnly="true"						
+					>
+				</div>
+			</div>
+		{% endfor %}
+	{% else %}
+		<h2>No movies are currently listed for the genre "{{genre.movie_genre.upper()}}"</h2>
+	{% endif %}
+{% endblock %}
+
